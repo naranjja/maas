@@ -1,8 +1,7 @@
-import flask
+from flask import Flask, request, jsonify
 from model import score
-from flask import request, jsonify
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 @app.route("/", methods=["POST"])
 def predict():

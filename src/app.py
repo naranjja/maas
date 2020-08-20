@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from celery import Celery
 from model import score
-from time import sleep
 
 app = Flask(__name__)
 app.config["CELERY_BROKER_URL"] = "redis://localhost:6379/0"
@@ -16,7 +15,7 @@ def score_async(x):
 @app.route("/start", methods=["POST"])
 def start():
     x = request.get_json()["x"]
-    task = score_async.apply_async(args=[x], expires=120)
+    task = score_async.apply_async(args=[x], expires=3600)
     return jsonify({
         "task_id": task.id,
     })
